@@ -89,8 +89,13 @@ def _is_sensitive_path(resolved: str) -> bool:
     name (``.SSH``, ``AUTHORIZED_KEYS``, ``Id_Rsa``) points at the same file as
     the lowercase form, so a case-sensitive check would let it slip past the
     deny-list in every file tool that relies on it.
+
+    Splitting is on both separators, not ``os.sep``: on Windows a forward-slash
+    path (``C:/Users/x/.ssh/id_rsa``) is valid and common, but ``split(os.sep)``
+    would only split on ``\\`` — leaving the whole path as one "component" so
+    ``.ssh`` / ``id_rsa`` never match and the deny-list is silently bypassed.
     """
-    parts = [p.casefold() for p in resolved.split(os.sep)]
+    parts = [p.casefold() for p in re.split(r"[\\/]", resolved)]
     filename = parts[-1] if parts else ""
 
     # Check if any path component is a sensitive directory.
@@ -126,6 +131,15 @@ def _tool_path_roots() -> list[str]:
     tmpdir = os.environ.get("TMPDIR")
     if tmpdir:
         roots.append(tmpdir)
+
+    # Platform temp dir — the only correct temp root on Windows, where the
+    # hardcoded "/tmp" above does not exist. tempfile.gettempdir() honours
+    # TMP/TEMP/TMPDIR and falls back to the OS default (e.g. %LOCALAPPDATA%\Temp).
+    try:
+        import tempfile
+        roots.append(tempfile.gettempdir())
+    except OSError:
+        pass
 
     # Opt-in extra roots from settings.
     try:
