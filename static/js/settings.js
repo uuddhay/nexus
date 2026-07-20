@@ -2906,6 +2906,29 @@ async function initBriefingSettings() {
     });
   }
   if (deliverySel) deliverySel.addEventListener('change', saveBriefing);
+
+  // ── Curator (self-improving skills) ──
+  const curatorToggle = el('set-curator-toggle');
+  const curatorOptions = el('set-curator-options');
+  const curatorDay = el('set-curator-day');
+  const curatorTime = el('set-curator-time');
+  const curatorCard = curatorToggle?.closest('.admin-card');
+
+  if (curatorToggle) {
+    curatorToggle.checked = !!config.curator_enabled;
+    if (curatorOptions) curatorOptions.style.display = curatorToggle.checked ? '' : 'none';
+    if (curatorCard) curatorCard.style.opacity = curatorToggle.checked ? '' : '0.45';
+    if (curatorDay) curatorDay.value = config.curator_day || 'mon';
+    if (curatorTime) curatorTime.value = config.curator_time || '03:00';
+
+    curatorToggle.addEventListener('change', () => {
+      if (curatorOptions) curatorOptions.style.display = curatorToggle.checked ? '' : 'none';
+      if (curatorCard) curatorCard.style.opacity = curatorToggle.checked ? '' : '0.45';
+      saveBriefing();
+    });
+    if (curatorDay) curatorDay.addEventListener('change', saveBriefing);
+    if (curatorTime) curatorTime.addEventListener('change', saveBriefing);
+  }
 }
 
 async function initEmailAccountsSettings() {

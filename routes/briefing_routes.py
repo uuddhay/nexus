@@ -43,6 +43,9 @@ DEFAULT_CONFIG = {
     "include_research": False,
     "delivery": "note",
     "research_topics": [],
+    "curator_enabled": False,       # auto-curate skills weekly
+    "curator_day": "mon",           # day of week for curator
+    "curator_time": "03:00",        # HH:MM
 }
 
 
@@ -79,50 +82,86 @@ def _sync_briefing_task(user: str, config: dict):
                 db.delete(task)
                 db.commit()
                 logger.info("briefing: removed scheduled task for %s", user)
-            return
-
-        time_str = config.get("time", "07:00")
-        try:
-            hour, minute = time_str.split(":")
-            hour = int(hour)
-            minute = int(minute)
-        except (ValueError, TypeError):
-            hour, minute = 7, 0
-
-        # Build prompt config for the daily_brief action
-        prompt_data = {
-            "include_calendar": config.get("include_calendar", True),
-            "include_email": config.get("include_email", True),
-            "include_todos": config.get("include_todos", True),
-            "include_research": config.get("include_research", False),
-            "delivery": config.get("delivery", "note"),
-            "research_topics": config.get("research_topics", []),
-        }
-
-        if task:
-            # Update existing task
-            task.scheduled_time = f"{hour:02d}:{minute:02d}"
-            task.prompt = json.dumps(prompt_data)
-            task.is_active = True
-            db.commit()
-            logger.info("briefing: updated scheduled task for %s", user)
         else:
-            # Create new task
-            new_task = ScheduledTask(
-                id=str(uuid.uuid4())[:8],
-                owner=user,
-                name="Morning Briefing",
-                action="daily_brief",
-                task_type="action",
-                schedule="daily",
-                scheduled_time=f"{hour:02d}:{minute:02d}",
-                prompt=json.dumps(prompt_data),
-                output_target="note",
-                is_active=True,
-            )
-            db.add(new_task)
-            db.commit()
-            logger.info("briefing: created scheduled task for %s at %s", user, time_str)
+            time_str = config.get("time", "07:00")
+            try:
+                hour, minute = time_str.split(":")
+                hour = int(hour)
+                minute = int(minute)
+            except (ValueError, TypeError):
+                hour, minute = 7, 0
+
+            prompt_data = {
+                "include_calendar": config.get("include_calendar", True),
+                "include_email": config.get("include_email", True),
+                "include_todos": config.get("include_todos", True),
+                "include_research": config.get("include_research", False),
+                "delivery": config.get("delivery", "note"),
+                "research_topics": config.get("research_topics", []),
+            }
+
+            if task:
+                task.scheduled_time = f"{hour:02d}:{minute:02d}"
+                task.prompt = json.dumps(prompt_data)
+                task.is_active = True
+                db.commit()
+                logger.info("briefing: updated scheduled task for %s", user)
+            else:
+                new_task = ScheduledTask(
+                    id=str(uuid.uuid4())[:8],
+                    owner=user,
+                    name="Morning Briefing",
+                    action="daily_brief",
+                    task_type="action",
+                    schedule="daily",
+                    scheduled_time=f"{hour:02d}:{minute:02d}",
+                    prompt=json.dumps(prompt_data),
+                    output_target="note",
+                    is_active=True,
+                )
+                db.add(new_task)
+                db.commit()
+                logger.info("briefing: created scheduled task for %s at %s", user, time_str)
+
+        # ── Curator task ──
+        curator_enabled = config.get("curator_enabled", False)
+        curator_task = db.query(ScheduledTask).filter(
+            ScheduledTask.owner == user,
+            ScheduledTask.action == "curate_skills",
+        ).first()
+
+        if not curator_enabled:
+            if curator_task:
+                db.delete(curator_task)
+                db.commit()
+                logger.info("briefing: removed curator task for %s", user)
+        else:
+            c_day = config.get("curator_day", "mon")
+            c_time = config.get("curator_time", "03:00")
+            day_map = {"mon": 0, "tue": 1, "wed": 2, "thu": 3, "fri": 4, "sat": 5, "sun": 6}
+            c_dow = day_map.get(c_day, 0)
+
+            if curator_task:
+                curator_task.scheduled_time = c_time
+                curator_task.scheduled_day = c_dow
+                curator_task.is_active = True
+                db.commit()
+            else:
+                new_task = ScheduledTask(
+                    id=str(uuid.uuid4())[:8],
+                    owner=user,
+                    name="Skill Curator",
+                    action="curate_skills",
+                    task_type="action",
+                    schedule="weekly",
+                    scheduled_time=c_time,
+                    scheduled_day=c_dow,
+                    output_target="note",
+                    is_active=True,
+                )
+                db.add(new_task)
+                db.commit()
+                logger.info("briefing: created curator task for %s on %s at %s", user, c_day, c_time)
     finally:
         db.close()
 

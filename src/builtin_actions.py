@@ -2801,6 +2801,18 @@ async def action_cookbook_serve(
     return f"Launched {repo_id} (session {sid})", True
 
 
+async def action_curate_skills(owner: str, **kwargs) -> Tuple[str, bool]:
+    """Run the skill curator: merge duplicates, archive stale, boost confidence."""
+    try:
+        from services.curator.curator import run_curator
+        from src.constants import DATA_DIR
+        result = await run_curator(owner=owner, data_dir=DATA_DIR)
+        return result, True
+    except Exception as e:
+        logger.error("curate_skills action failed: %s", e)
+        return str(e), False
+
+
 BUILTIN_ACTIONS = {
     "tidy_sessions": action_tidy_sessions,
     "tidy_documents": action_tidy_documents,
@@ -2822,6 +2834,7 @@ BUILTIN_ACTIONS = {
     "audit_skills": action_audit_skills,
     "check_email_urgency": action_check_email_urgency,
     "cookbook_serve": action_cookbook_serve,
+    "curate_skills": action_curate_skills,
     # ping_notes removed from the registry — runs only inside `_note_pings_loop`.
 }
 
@@ -2843,4 +2856,5 @@ BUILTIN_ACTION_INFO = {
     "test_skills": "Run the per-skill Test on every skill: agent run + LLM judge → records verdict on the skill (pass/needs_work/fail/inconclusive). Advisory only — never rewrites or demotes anything.",
     "audit_skills": "Audit unaudited skills after enough new skills are added: test, narrow metadata, self-edit/retry, optional teacher rewrite, tag duplicates/trivial skills, and publish/draft using the auto-approve threshold.",
     "check_email_urgency": "Scan unread emails hourly, tag urgent/reply-soon/newsletter/marketing/spam, and send a reminder when a new email needs a fast reply.",
+    "curate_skills": "Run the skill curator: merge duplicate skills, archive stale ones, boost confidence for well-used skills.",
 }

@@ -2054,6 +2054,29 @@
               </div>
               <div style="font-size:11px;opacity:0.6;margin-top:8px;">Your briefing is saved as a Note in your personal documents. You can read, edit, or delete it anytime.</div>
             </div>
+          </div>
+          <div class="admin-card" style="opacity:0.45">
+            <h2 style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:1px;opacity:0.6;flex-shrink:0"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>Self-Improving Skills<span style="flex:1"></span><label class="admin-switch" title="Auto-create skills from experience and curate the skill library"><input type="checkbox" id="set-curator-toggle"><span class="admin-slider"></span></label></h2>
+            <div class="admin-toggle-sub" style="margin-bottom:8px">After complex tasks, Nexus extracts reusable procedures as SKILL.md files. Runs a weekly curator that merges duplicates, archives stale skills, and boosts confidence for well-used ones. Off by default.</div>
+            <div id="set-curator-options" style="display:none">
+              <div class="settings-row">
+                <label class="settings-label">Curator day</label>
+                <select id="set-curator-day" class="settings-select" style="width:140px">
+                  <option value="mon">Monday</option>
+                  <option value="tue">Tuesday</option>
+                  <option value="wed">Wednesday</option>
+                  <option value="thu">Thursday</option>
+                  <option value="fri">Friday</option>
+                  <option value="sat">Saturday</option>
+                  <option value="sun">Sunday</option>
+                </select>
+              </div>
+              <div class="settings-row">
+                <label class="settings-label">Curator time</label>
+                <input id="set-curator-time" class="settings-select" type="time" value="03:00" style="width:120px" />
+              </div>
+              <div style="font-size:11px;opacity:0.6;margin-top:8px;">Curator reports are saved as Notes. Skills are auto-created from complex sessions (8+ tool calls).</div>
+            </div>
             <div class="settings-col">
               <div class="settings-row">
                 <label class="settings-label" title="Optional — write the reminder in the voice of a saved character">Persona</label>
