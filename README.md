@@ -1,9 +1,10 @@
 <p align="center">
-  <img src="docs/nexus-wordmark.png" alt="Nexus" width="238">
+  <img src="docs/nexus-wordmark.jpg" alt="Nexus" width="460">
 </p>
 
 <p align="center">
-  A self-hosted AI workspace for chat, agents, research, documents, email, notes, calendar, and local model workflows.
+  <strong>The only self-hosted AI workspace that lives inside your digital life.</strong><br>
+  Chat, agents, email, calendar, documents, research, model serving — all in one private, local-first platform.
 </p>
 
 <p align="center">
@@ -34,16 +35,34 @@ Open `http://localhost:7000` when the containers are healthy. The first admin pa
 
 Native installs, GPU notes, Windows/macOS instructions, HTTPS, and configuration live in the [setup guide](docs/setup.md).
 
-## Features
+## Features — *What no other platform can do*
 
-- **Chat + Agents** — local/API models, tools, MCP, files, shell, skills, and memory.
-- **Cookbook** — hardware-aware model recommendations, downloads, and serving.
-- **Deep Research** — multi-step web research with source reading and report generation.
-- **Compare** — blind side-by-side model testing and synthesis.
-- **Documents** — writing-first editor with AI edits, suggestions, Markdown, HTML, CSV, and syntax highlighting.
-- **Email** — IMAP/SMTP inbox with triage, tags, summaries, reminders, and reply drafts.
-- **Notes, Tasks + Calendar** — reminders, todos, scheduled agent tasks, and CalDAV sync.
-- **Extras** — gallery/image editor, themes, uploads, web search, presets, sessions, and 2FA.
+### 📧 Email Inbox + AI Assistant
+Full IMAP/SMTP integration with AI triage, urgency detection, summaries, reply drafts, tags, reminders, and attachment handling. *No other open-source AI platform has this.*
+
+### 📅 Calendar + CalDAV Sync
+Personal and shared calendars with month/week/day views, recurring events, color coding, attendees, reminders, and two-way CalDAV sync. *Nexus is the only AI workspace with a calendar.*
+
+### 📝 Documents Editor
+Full-featured writing editor with AI edits, inline suggestions, Markdown/HTML/CSV support, syntax highlighting, and document library. *Write with AI, not just chat with it.*
+
+### 🧠 Chat + Autonomous Agents
+Local and API models, tool calling, MCP servers, file uploads, shell access, skills (SKILL.md), memory, and web search. Agent loop with real-time progress visibility.
+
+### 🔬 Deep Research
+Multi-step autonomous web research: generates questions, searches, reads sources, iterates, and produces structured reports with citations. *Built-in researcher, not a separate tool.*
+
+### 🍳 Cookbook — Model Serving
+Hardware-aware model recommendations, one-click downloads, and local model serving (llama.cpp, vLLM). Knows what fits your GPU before you download.
+
+### 🔗 Cross-Domain Intelligence (NEW)
+Email → Tasks, Email → Calendar, Calendar → Research, Tasks → Email. The AI connects your data across domains because they all live in one place. *Only Nexus can do this.*
+
+### 📋 Notes, Tasks + Calendar
+Reminders, todos, scheduled agent tasks, recurring events, and a unified view of your day.
+
+### 🎨 Extras
+Gallery/image editor, themes, uploads, web search (DuckDuckGo, SearXNG, Brave, Tavily, + more), presets, sessions, 2FA, and MCP servers for email, image generation, memory, and RAG.
 
 ## Demo
 

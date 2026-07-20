@@ -1,13 +1,231 @@
-# Feature Research — Mining Open-Source Projects for Nexus
+# Nexus Strategy — How to Be Better Than Anything Out There
 
 > **Date:** 2026-07-20
-> **Scope:** Compared Nexus against Open WebUI, Jan, Dify, LobeChat, and n8n to identify valuable feature gaps.
+> **Scope:** Competitive analysis of Open WebUI, Dify, n8n, Jan, and LobeHub → unique strategy for Nexus to dominate.
 
 ---
 
-## Executive Summary
+## 🏆 Nexus's Unfair Advantage
 
-Nexus is already a remarkably **feature-complete** self-hosted AI workspace. It outpaces competitors in email, calendar, documents, deep research, and MCP integration. However, these projects have pioneered features that would meaningfully extend Nexus. Below is a prioritized, actionable list.
+**No other open-source AI platform combines email, calendar, documents, deep research, model serving, and agents in a single self-hosted process.**
+
+| Domain | Nexus | Open WebUI | Dify | n8n | Jan | LobeHub |
+|---|---|---|---|---|---|---|
+| Email (IMAP/SMTP) | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Calendar + CalDAV | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Documents Editor | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Deep Research | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Model Serving | **✅** | ❌ | ❌ | ❌ | ✅ | ❌ |
+| MCP Built-in | **✅** | ❌ | ❌ | ❌ | ✅ | ❌ |
+| Chat + Agents | **✅** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| RAG | **✅** | ✅ | ✅ | ❌ | ❌ | ✅ |
+
+Nexus doesn't need to catch up. **Nexus needs to build what no one else can** — because they'd need to build email, calendars, documents, and research engines from scratch.
+
+---
+
+## 🎯 The Strategy: Autonomous AI Personal Assistant
+
+The winning paradigm is **not** "chat with AI" (Open WebUI), **not** "visual workflow builder" (Dify, n8n), and **not** "agent orchestration" (LobeHub).
+
+It's: **"An AI that lives in your digital life — reads your email, knows your calendar, drafts documents, manages tasks, researches topics, and acts autonomously — all in one place, all private, all local."**
+
+Nexus is the **only** platform that can do this because Nexus is the **only** platform with email + calendar + documents + tasks + research in one codebase.
+
+---
+
+## 🔴 PHASE 1 — Immediate (Sprint 1-2): Build the Autonomous Core
+
+These features leverage Nexus's unique data surface. No competitor can replicate them easily.
+
+### 1. 🧠 Morning Briefing Agent
+*"Every morning, Nexus briefs me on what I need to know."*
+
+**How it works:**
+- Scheduled agent runs at your configured time (e.g., 7am)
+- Reads: unread emails from priority senders, today's calendar events, overdue tasks, relevant news via Deep Research
+- Generates a personalized Markdown briefing document
+- Saves as a Note or sends to your email
+
+**Why it wins:** No other platform has all the data sources to do this. Open WebUI would need email+calendar integration. Dify would need email. Only Nexus can do it.
+
+**Implementation:** Extend existing `routes/task_routes.py` with a cron-like scheduler. New `services/briefing/` module. Agent prompt templates in a configurable location.
+
+### 2. 📧 Smart Email Assistant
+*"Nexus reads my email, understands it, and acts on it."*
+
+**How it works:**
+- Auto-categorize incoming mail (work, personal, spam, newsletter)
+- Flag urgent emails based on sender, subject, and content
+- Suggest reply drafts with one-click apply
+- Auto-create tasks from emails: "Can you review this by Friday?" → creates task
+- Auto-schedule events: "Let's meet Tuesday at 3pm" → creates calendar event
+- Unsubscribe suggestions for newsletters
+- Daily email digest ("You have 23 emails. Here are the 4 that matter.")
+
+**Why it wins:** Open WebUI has no email. n8n has email nodes but no AI email agent. Only Nexus lives inside your mailbox.
+
+**Implementation:** New `services/email_assistant/` module. Uses existing `routes/email_helpers.py` and `routes/email_routes.py`. Agent tools to read/send/draft. Runs as a background poller.
+
+### 3. 📋 Cross-Domain Actions
+*"Take what happens in one domain and act in another."*
+
+**How it works:**
+- **Email → Task:** "Can you review the Q3 report by Friday?" → Task with due date
+- **Email → Calendar:** "Meeting Tuesday 3pm to discuss budget" → Calendar event
+- **Email → Document:** Save email thread as a document
+- **Calendar → Research:** Before a meeting, auto-research the attendees/topic
+- **Meeting → Notes:** After a meeting, create a summary note
+- **Task → Email:** Auto-follow-up on overdue tasks via email
+- **Document → Email:** Share document via email with one click
+
+**Why it wins:** This is Nexus's **unbeatable moat**. To replicate this, competitors would need to build an email client, calendar, document editor, task system, AND connect them all.
+
+**Implementation:** Cross-domain tool registry in `src/agent_loop.py`. Each domain exposes actions. A central "cross-domain orchestrator" routes between them.
+
+---
+
+## 🟡 PHASE 2 — Near-Term (Sprint 3-5): Match and Exceed
+
+### 4. ⚡ Visual Workflow Builder (AI-Native)
+*"Not Dify's canvas. Better."*
+
+**Nexus's twist:** Not just drag-and-drop — **describe what you want in natural language, and Nexus builds the workflow for you.**
+
+- User types: "Every morning, check my email for urgent messages, search the web for news about my competitors, and save a briefing as a document."
+- Nexus's agent generates the workflow
+- User can tweak it visually
+- Workflow runs on schedule
+
+**Why it beats Dify:** Dify makes you build workflows manually. Nexus lets you *describe* them.
+
+**Implementation:** Visual canvas in `static/js/workflow.js`. Workflow engine in `services/workflow/`. Agent generates workflow JSON from natural language.
+
+### 5. 🔌 Plugin Marketplace
+*"One-click install from the community."*
+
+**Format:** `plugin.json` manifest. Plugin = a directory with a SKILL.md + optional Python handlers + optional frontend.
+
+**Marketplace:** Add "Import from Nexus Community" button in Skills UI. Plugins install from GitHub repos.
+
+**Why it beats Open WebUI:** Open WebUI has a community marketplace but no skill/agent system. Nexus has both.
+
+### 6. 📊 Usage Analytics & RBAC
+*"For teams and power users."*
+
+- Token usage tracking per-user, per-model, per-session
+- Admin dashboard with charts (token consumption, cost, active users)
+- Role-based access: admin, power user, viewer
+- Group-based model/tool permissions
+
+---
+
+## 🔵 PHASE 3 — Long-Term (Sprint 6+): The Unassailable Moat
+
+### 7. 🏢 Multi-Agent Teams (Beyond LobeHub)
+*"Not one agent — a team of agents working for you."*
+
+- Hire agents for specific roles: Email Agent, Research Agent, Calendar Agent, Writing Agent
+- They collaborate: Research Agent finds info → Writing Agent drafts document → Email Agent sends it
+- Schedule them: agents run on cron, on events, or on-demand
+- They learn your preferences over time
+
+**Why it beats LobeHub:** LobeHub has multi-agent vision but no data for agents to act on. Nexus's agents have email, calendar, documents, and research.
+
+### 8. 🖥️ Desktop Native App
+*"Nexus as a real desktop app (Tauri)."*
+
+- System tray with unread counts
+- Native notifications
+- Global hotkey to open search/quick-action
+- Offline-first with local SQLite sync
+- Auto-start on boot
+
+### 9. 🌍 i18n / Multilingual
+*"Nexus in your language."*
+
+- Extract all UI strings to JSON locale files
+- Community-contributed translations
+- Language selector in settings
+
+---
+
+## 📊 Feature Comparison: Nexus vs. The World
+
+| Category | Nexus | Open WebUI | Dify | n8n | Jan | LobeHub |
+|---|---|---|---|---|---|---|
+| Chat + Agents | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Email | ✅ **🏆** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Calendar | ✅ **🏆** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Documents | ✅ **🏆** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Deep Research | ✅ **🏆** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Model Serving | ✅ **🏆** | ❌ | ❌ | ❌ | ✅ | ❌ |
+| MCP Built-in | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| Visual Workflow | ❌ | ❌ | ✅ **🏆** | ✅ | ❌ | ❌ |
+| Workflow Auto- | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ **← Nexus opportunity** |
+| Scheduled Tasks | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| Morning Briefing | ❌ **← Nexus opportunity** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Email Assistant | ❌ **← Nexus opportunity** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Cross-Domain Actions | ❌ **← Nexus opportunity** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Plugin Marketplace | ❌ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| RBAC + Groups | ❌ | ✅ **🏆** | ✅ | ✅ | ❌ | ❌ |
+| Usage Analytics | ❌ | ✅ | ✅ **🏆** | ❌ | ❌ | ❌ |
+| Code Interpreter | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Desktop App | ❌ | ❌ | ❌ | ✅ | ✅ **🏆** | ✅ |
+| Multi-Agent Teams | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ **🏆** |
+| i18n | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Search Providers | ~5 | 20+ | ❌ | ❌ | ❌ | ❌ |
+
+---
+
+## 🚀 Recommended Sprint Plan
+
+### Sprint 1: Morning Briefing + Email Assistant
+```
+▸ Morning Briefing Agent (services/briefing/)
+▸ Email auto-categorization + urgency detection
+▸ Email → Task / Email → Calendar actions
+▸ Daily email digest
+```
+
+### Sprint 2: Cross-Domain Engine + Scheduled Automations
+```
+▸ Cross-domain action registry
+▸ Cron-based prompt scheduling
+▸ Calendar → Research auto-prep
+▸ Task → Email auto-follow-up
+```
+
+### Sprint 3: Visual Workflow Builder (AI-Native)
+```
+▸ Natural-language workflow generation
+▸ Visual canvas UI
+▸ Workflow engine (services/workflow/)
+▸ Integrate with existing tools + domains
+```
+
+### Sprint 4: Plugin Marketplace + RBAC
+```
+▸ plugin.json format + installer
+▸ Community import button
+▸ Token usage tracking
+▸ Admin analytics dashboard
+▸ Group-based permissions
+```
+
+### Sprint 5: Polish + Desktop + Multi-Agent
+```
+▸ Tauri desktop wrapper
+▸ Multi-agent orchestration
+▸ i18n framework
+▸ Performance optimization
+```
+
+---
+
+## 💡 The One-Sentence Strategy
+
+> **"Nexus is the only AI workspace that lives inside your digital life — because it's the only one with email, calendar, documents, and research in a single private, local-first platform. Build the autonomous agent that connects them all, and no competitor can catch up."**
 
 ---
 
