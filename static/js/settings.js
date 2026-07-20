@@ -2341,6 +2341,7 @@ function initAll() {
   initEmailSettings();
   initEmailAccountsSettings();
   initReminderSettings();
+  initBriefingSettings();
   initUnifiedIntegrations();
 }
 
@@ -2811,6 +2812,100 @@ async function initReminderSettings() {
       }
     });
   }
+}
+
+/* ── Morning Briefing ─────────────────────────────────────────── */
+async function initBriefingSettings() {
+  const toggle = el('set-briefing-toggle');
+  const options = el('set-briefing-options');
+  const timeIn = el('set-briefing-time');
+  const incCal = el('set-briefing-inc-calendar');
+  const incEmail = el('set-briefing-inc-email');
+  const incTodos = el('set-briefing-inc-todos');
+  const incResearch = el('set-briefing-inc-research');
+  const researchTopicsRow = el('set-briefing-research-topics-row');
+  const researchTopicsIn = el('set-briefing-research-topics');
+  const deliverySel = el('set-briefing-delivery');
+  const card = el('morning-briefing-card');
+  if (!toggle || !card) return;
+
+  // Only show the briefing card if the user has email or notes access
+  card.style.display = '';
+
+  // Load saved config
+  let config = {};
+  try {
+    const res = await fetch('/api/briefing/config', { credentials: 'same-origin' });
+    if (res.ok) config = await res.json();
+  } catch (_) {}
+
+  // Apply config to UI
+  toggle.checked = !!config.enabled;
+  if (timeIn) timeIn.value = config.time || '07:00';
+  if (incCal) incCal.checked = config.include_calendar !== false;
+  if (incEmail) incEmail.checked = config.include_email !== false;
+  if (incTodos) incTodos.checked = config.include_todos !== false;
+  if (incResearch) incResearch.checked = !!config.include_research;
+  if (researchTopicsIn) researchTopicsIn.value = (config.research_topics || []).join(', ');
+  if (deliverySel) deliverySel.value = config.delivery || 'note';
+  options.style.display = toggle.checked ? '' : 'none';
+  if (researchTopicsRow) researchTopicsRow.style.display = incResearch?.checked ? '' : 'none';
+
+  // Dim card when off
+  function syncDim() {
+    card.style.opacity = toggle.checked ? '' : '0.45';
+  }
+  syncDim();
+
+  async function saveBriefing() {
+    const body = {
+      enabled: toggle.checked,
+      time: timeIn?.value || '07:00',
+      include_calendar: incCal ? incCal.checked : true,
+      include_email: incEmail ? incEmail.checked : true,
+      include_todos: incTodos ? incTodos.checked : true,
+      include_research: incResearch ? incResearch.checked : false,
+      delivery: deliverySel?.value || 'note',
+      research_topics: researchTopicsIn
+        ? researchTopicsIn.value.split(',').map(s => s.trim()).filter(Boolean)
+        : [],
+    };
+    try {
+      await fetch('/api/briefing/config', {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+    } catch (e) {
+      console.warn('Failed to save briefing config:', e);
+    }
+  }
+
+  toggle.addEventListener('change', () => {
+    options.style.display = toggle.checked ? '' : 'none';
+    syncDim();
+    saveBriefing();
+  });
+
+  if (timeIn) timeIn.addEventListener('change', saveBriefing);
+  if (incCal) incCal.addEventListener('change', saveBriefing);
+  if (incEmail) incEmail.addEventListener('change', saveBriefing);
+  if (incTodos) incTodos.addEventListener('change', saveBriefing);
+  if (incResearch) {
+    incResearch.addEventListener('change', () => {
+      if (researchTopicsRow) researchTopicsRow.style.display = incResearch.checked ? '' : 'none';
+      saveBriefing();
+    });
+  }
+  if (researchTopicsIn) {
+    let debounce;
+    researchTopicsIn.addEventListener('input', () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(saveBriefing, 600);
+    });
+  }
+  if (deliverySel) deliverySel.addEventListener('change', saveBriefing);
 }
 
 async function initEmailAccountsSettings() {

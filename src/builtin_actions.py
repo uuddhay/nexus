@@ -1307,11 +1307,36 @@ async def action_learn_sender_signatures(owner: str, **kwargs) -> Tuple[str, boo
 
 
 async def action_daily_brief(owner: str, **kwargs) -> Tuple[str, bool]:
-    """Build a short morning digest: today's calendar events, unread email count
-    + top-N senders/subjects, active todos."""
+    """Build a morning digest: today's calendar events, unread email count
+    + top-N senders/subjects, active todos, optional Deep Research.
+
+    kwargs (from task prompt JSON):
+        include_calendar: bool (default True)
+        include_email: bool (default True)
+        include_todos: bool (default True)
+        include_research: bool (default False)
+        delivery: str — "note" | "email" (default "note")
+        research_topics: list[str] (default [])
+    """
     try:
         from datetime import datetime as _dt, timedelta as _td
         import json as _json
+
+        # Read config from kwargs or task prompt JSON
+        _prompt_raw = kwargs.get("prompt") or kwargs.get("task_prompt") or ""
+        _cfg = {}
+        if isinstance(_prompt_raw, str) and _prompt_raw.strip().startswith("{"):
+            try:
+                _cfg = _json.loads(_prompt_raw)
+            except Exception:
+                pass
+        elif isinstance(_prompt_raw, dict):
+            _cfg = _prompt_raw
+        _inc_cal = _cfg.get("include_calendar", True)
+        _inc_email = _cfg.get("include_email", True)
+        _inc_todos = _cfg.get("include_todos", True)
+        _inc_research = _cfg.get("include_research", False)
+        _delivery = _cfg.get("delivery", "note")
 
         from core.database import SessionLocal, CalendarEvent, CalendarCal, Note
         from routes.email_helpers import _imap_connect, _decode_header
@@ -1399,35 +1424,80 @@ async def action_daily_brief(owner: str, **kwargs) -> Tuple[str, bool]:
                 todo_lines.append(n.title)
 
         # ----- Compose -----
-        # %-d is GNU-only; format the day with str() so the brief works on
-        # Windows / non-glibc Python builds too.
         date_label = today.strftime(f"%A, %B {today.day}, %Y")
 
-        plain = [f"Daily brief — {date_label}", ""]
-        if events:
-            plain.append("Calendar:")
-            for e in events:
-                t = e.dtstart.strftime("%H:%M") if not e.all_day else "all day"
-                loc = f" @ {e.location}" if e.location else ""
-                plain.append(f"  {t}  {e.summary}{loc}")
-            plain.append("")
-        else:
-            plain.append("Calendar: nothing scheduled.")
+        plain = [f"Daily Brief — {date_label}", ""]
+
+        if _inc_cal:
+            if events:
+                plain.append("Calendar:")
+                for e in events:
+                    t = e.dtstart.strftime("%H:%M") if not e.all_day else "all day"
+                    loc = f" @ {e.location}" if e.location else ""
+                    plain.append(f"  {t}  {e.summary}{loc}")
+                plain.append("")
+            else:
+                plain.append("Calendar: nothing scheduled.")
+                plain.append("")
+
+        if _inc_email:
+            plain.append(f"Email: {unread_count} unread")
+            for sender, subj in recent_subjects:
+                plain.append(f"  · {sender} — {subj}")
             plain.append("")
 
-        plain.append(f"Email: {unread_count} unread")
-        for sender, subj in recent_subjects:
-            plain.append(f"  · {sender} — {subj}")
-        plain.append("")
-
-        if todo_lines:
+        if _inc_todos and todo_lines:
             plain.append("Todos:")
             for t in todo_lines[:10]:
                 plain.append(f"  · {t}")
-        else:
-            plain.append("Todos: none active.")
+            plain.append("")
 
         plain_body = "\n".join(plain)
+
+        # ----- Optional Deep Research -----
+        if _inc_research:
+            _topics = _cfg.get("research_topics", [])
+            if _topics:
+                try:
+                    from services.search import comprehensive_web_search
+                    _research_parts = []
+                    for _topic in _topics:
+                        if not _topic.strip():
+                            continue
+                        logger.info("daily_brief: researching topic: %s", _topic)
+                        _text, _sources = comprehensive_web_search(
+                            _topic.strip(), max_pages=3, time_filter="week"
+                        )
+                        if _text:
+                            _research_parts.append(f"## {_topic}\n\n{_text[:2000]}")
+                    if _research_parts:
+                        plain_body += "\n\n---\n## Research\n\n" + "\n\n".join(_research_parts)
+                except Exception as _re:
+                    logger.debug("daily_brief: research failed: %s", _re)
+
+        # ----- Save as Note -----
+        if _delivery == "note":
+            try:
+                from core.database import SessionLocal as _DB, Note as _Note
+                from datetime import timezone as _tz
+                _db = _DB()
+                try:
+                    _note = _Note(
+                        id=str(uuid.uuid4())[:8],
+                        owner=owner,
+                        title=f"Daily Brief — {date_label}",
+                        content=plain_body,
+                        note_type="markdown",
+                        created_at=_dt.now(_tz.utc).replace(tzinfo=None),
+                        updated_at=_dt.now(_tz.utc).replace(tzinfo=None),
+                    )
+                    _db.add(_note)
+                    _db.commit()
+                    logger.info("daily_brief: saved as note for %s", owner)
+                finally:
+                    _db.close()
+            except Exception as _ne:
+                logger.warning("daily_brief: failed to save as note: %s", _ne)
 
         return plain_body, True
     except Exception as e:

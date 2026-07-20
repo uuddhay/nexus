@@ -2023,6 +2023,37 @@
           <div class="admin-card">
             <h2 style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:1px;opacity:0.6;flex-shrink:0"><path d="M12 0L14.59 8.41L23 12L14.59 15.59L12 24L9.41 15.59L1 12L9.41 8.41Z"/></svg>AI Synthesis<span style="flex:1"></span><label class="admin-switch" title="Use the utility model to write reminder messages"><input type="checkbox" id="set-reminder-llm-toggle"><span class="admin-slider"></span></label></h2>
             <div class="admin-toggle-sub" style="margin-bottom:8px">When on, the utility model writes a short, warm one-line reminder for browser, email, ntfy, and webhook reminders instead of just the raw note content.</div>
+          </div>
+          <div class="admin-card" id="morning-briefing-card" style="display:none">
+            <h2 style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:1px;opacity:0.6;flex-shrink:0"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>Morning Briefing<span style="flex:1"></span><label class="admin-switch" title="Receive a daily morning briefing with calendar, email, and task summaries"><input type="checkbox" id="set-briefing-toggle"><span class="admin-slider"></span></label></h2>
+            <div class="admin-toggle-sub" style="margin-bottom:8px">Get a daily digest every morning — today's calendar, unread email highlights, active todos, and optional Deep Research. Off by default.</div>
+            <div id="set-briefing-options" style="display:none">
+              <div class="settings-row">
+                <label class="settings-label">Time</label>
+                <input id="set-briefing-time" class="settings-select" type="time" value="07:00" style="width:120px" />
+              </div>
+              <div class="settings-row">
+                <label class="settings-label">Include</label>
+                <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+                  <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" id="set-briefing-inc-calendar" checked> Calendar</label>
+                  <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" id="set-briefing-inc-email" checked> Email</label>
+                  <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" id="set-briefing-inc-todos" checked> Todos</label>
+                  <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" id="set-briefing-inc-research"> Deep Research</label>
+                </div>
+              </div>
+              <div class="settings-row" id="set-briefing-research-topics-row" style="display:none">
+                <label class="settings-label">Research topics</label>
+                <input id="set-briefing-research-topics" class="settings-select" type="text" placeholder="e.g. AI news, competitor updates (comma-separated)" style="flex:1" />
+              </div>
+              <div class="settings-row">
+                <label class="settings-label">Delivery</label>
+                <select id="set-briefing-delivery" class="settings-select" style="width:160px">
+                  <option value="note">Save as Note</option>
+                  <option value="email">Send via Email</option>
+                </select>
+              </div>
+              <div style="font-size:11px;opacity:0.6;margin-top:8px;">Your briefing is saved as a Note in your personal documents. You can read, edit, or delete it anytime.</div>
+            </div>
             <div class="settings-col">
               <div class="settings-row">
                 <label class="settings-label" title="Optional — write the reminder in the voice of a saved character">Persona</label>
