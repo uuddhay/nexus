@@ -3286,10 +3286,10 @@ import { bindMenuDismiss, dismissOrRemove } from './escMenuStack.js';
   async function _loadNexusAttachItems(menu, kind) {
     const list = menu.querySelector('.email-nexus-attach-list');
     if (!list) return;
-    menu.dataset.odyAttachKind = kind;
+    menu.dataset.nxAttachKind = kind;
     list.replaceChildren(spinnerModule.createLoadingRow('Loading…', 14));
-    menu.querySelectorAll('[data-ody-attach-kind]').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.odyAttachKind === kind);
+    menu.querySelectorAll('[data-nx-attach-kind]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.nxAttachKind === kind);
     });
     const q = (menu.querySelector('.email-nexus-attach-search')?.value || '').trim();
     try {
@@ -3366,11 +3366,11 @@ import { bindMenuDismiss, dismissOrRemove } from './escMenuStack.js';
         Upload file
       </button>
       <div class="email-nexus-attach-tabs">
-        <button type="button" data-ody-attach-kind="document" class="active">
+        <button type="button" data-nx-attach-kind="document" class="active">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h6"/></svg>
           <span>Documents</span>
         </button>
-        <button type="button" data-ody-attach-kind="gallery">
+        <button type="button" data-nx-attach-kind="gallery">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
           <span>Gallery</span>
         </button>
@@ -3395,14 +3395,14 @@ import { bindMenuDismiss, dismissOrRemove } from './escMenuStack.js';
       _closeNexusAttachMenu();
       document.getElementById('doc-email-file-input')?.click();
     });
-    menu.querySelectorAll('[data-ody-attach-kind]').forEach(btn => {
-      btn.addEventListener('click', () => _loadNexusAttachItems(menu, btn.dataset.odyAttachKind));
+    menu.querySelectorAll('[data-nx-attach-kind]').forEach(btn => {
+      btn.addEventListener('click', () => _loadNexusAttachItems(menu, btn.dataset.nxAttachKind));
     });
     let attachSearchTimer = null;
     menu.querySelector('.email-nexus-attach-search')?.addEventListener('input', () => {
       clearTimeout(attachSearchTimer);
       attachSearchTimer = setTimeout(() => {
-        _loadNexusAttachItems(menu, menu.dataset.odyAttachKind || 'document');
+        _loadNexusAttachItems(menu, menu.dataset.nxAttachKind || 'document');
       }, 220);
     });
     menu.querySelector('.email-nexus-attach-selected')?.addEventListener('click', () => _attachSelectedNexusItems(menu));

@@ -473,7 +473,7 @@
       const _rem = document.getElementById('remember').checked;
       if (_rem) localStorage.setItem('nexus-last-user', username);
       else localStorage.removeItem('nexus-last-user');
-      sessionStorage.removeItem('ody-session-active');
+      sessionStorage.removeItem('nx-session-active');
       submitBtn.innerHTML = '<span class="login-spinner" aria-hidden="true"></span>';
       submitBtn.disabled = true;
       Promise.all([
@@ -481,9 +481,9 @@
         fetch('/api/auth/features', { credentials: 'same-origin' }).then(r => r.json()),
         fetch('/api/auth/settings', { credentials: 'same-origin' }).then(r => r.json()),
       ]).then(([sess, feat, sett]) => {
-        sessionStorage.setItem('ody-prefetch-sessions', JSON.stringify(sess));
-        sessionStorage.setItem('ody-prefetch-features', JSON.stringify(feat));
-        sessionStorage.setItem('ody-prefetch-settings', JSON.stringify(sett));
+        sessionStorage.setItem('nx-prefetch-sessions', JSON.stringify(sess));
+        sessionStorage.setItem('nx-prefetch-features', JSON.stringify(feat));
+        sessionStorage.setItem('nx-prefetch-settings', JSON.stringify(sett));
       }).catch(() => {}).finally(() => { window.location.replace('/'); });
     }
     async function doLogin(totpCode) {

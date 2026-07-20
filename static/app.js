@@ -1490,8 +1490,8 @@ function initializeEventListeners() {
 
   // Feature visibility — hide admin-disabled features
   // Use prefetched data from login page if available
-  const _prefetchedFeatures = sessionStorage.getItem('ody-prefetch-features');
-  sessionStorage.removeItem('ody-prefetch-features');
+  const _prefetchedFeatures = sessionStorage.getItem('nx-prefetch-features');
+  sessionStorage.removeItem('nx-prefetch-features');
   window._initFeaturesReady = (_prefetchedFeatures
     ? Promise.resolve(JSON.parse(_prefetchedFeatures))
     : fetch(`${API_BASE}/api/auth/features`, { credentials: 'same-origin' }).then(r => r.json())
@@ -1518,8 +1518,8 @@ function initializeEventListeners() {
     .catch(() => {});
 
   // Hide Gallery when image generation is disabled in settings
-  const _prefetchedSettings = sessionStorage.getItem('ody-prefetch-settings');
-  sessionStorage.removeItem('ody-prefetch-settings');
+  const _prefetchedSettings = sessionStorage.getItem('nx-prefetch-settings');
+  sessionStorage.removeItem('nx-prefetch-settings');
   window._initSettingsReady = (_prefetchedSettings
     ? Promise.resolve(JSON.parse(_prefetchedSettings))
     : fetch(`${API_BASE}/api/auth/settings`, { credentials: 'same-origin' }).then(r => r.json())

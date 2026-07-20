@@ -839,7 +839,7 @@ export function getImageCost(model, quality, size) {
 }
 
 /* ── Session cost helpers ─────────────────────────────────────────── */
-const _COST_KEY = 'ody-session-cost';
+const _COST_KEY = 'nx-session-cost';
 
 /** Return the accumulated cost for the current (or given) session. */
 export function getSessionCost(sessionId) {

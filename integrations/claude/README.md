@@ -12,7 +12,7 @@ This directory contains the Claude Code skill bundle for Nexus.
 
 ```bash
 export NEXUS_URL=http://your-nexus-host:7000
-export NEXUS_API_TOKEN=ody_generated_token
+export NEXUS_API_TOKEN=nx_generated_token
 mkdir -p ~/.claude
 curl -fsSL -H "Authorization: Bearer $NEXUS_API_TOKEN" "$NEXUS_URL/api/claude/plugin.zip" -o /tmp/nexus-claude-skill.zip
 python3 -m zipfile -e /tmp/nexus-claude-skill.zip ~/.claude/
