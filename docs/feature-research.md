@@ -34,6 +34,15 @@
 | TUI/CLI interface | ✅ Full terminal UI | ❌ Web-only |
 | Voice mode | ✅ Real-time voice | ⚠️ Basic TTS/STT |
 
+### Vibe Coding Platforms (App Generation)
+
+| Platform | Type | Key Differentiator | Nexus Gap |
+|---|---|---|---|
+| **Manus.ai** (Meta) | Conversational app builder | Full-stack apps from a single prompt, built-in DB/auth/payments, SEO, analytics, browser operator, code export | AI-powered app generation inside Nexus |
+| **Lovable** | AI web app builder | React + Supabase apps from prompts, real-time preview, one-click deploy | Visual app builder |
+| **Replit Agent** | AI coding environment | Full IDE + AI agent, deploy apps, databases, custom domains | In-browser coding environment |
+| **Bolt.new** | AI web app builder | StackBlitz-based, prompt-to-app, live preview, deploy | Instant app prototyping |
+
 ### Agent/Coding Tool Landscape
 
 | Project | Type | Key Differentiator | Nexus Gap |

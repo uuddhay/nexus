@@ -50,6 +50,17 @@
 
 **Claude Code and Hermes Agent lead in agent capability.** Nexus leads in *data depth* — email, calendar, documents, research.
 
+### Where Vibe Coding / App Builders Win
+
+| Platform | What it does | Nexus Opportunity |
+|---|---|---|
+| **Manus.ai** (Meta) | Full-stack apps from plain English prompts. Built-in DB, auth, Stripe, SEO, analytics, browser operator, code export | **Conversational app builder inside Nexus** — "Build me a task dashboard" → Nexus generates the UI using existing components |
+| **Lovable** | React + Supabase apps from prompts | Visual workspace dashboard builder |
+| **Replit Agent** | Full IDE + AI agent, deploy apps | In-browser coding for extending Nexus |
+| **Bolt.new** | StackBlitz-based prompt-to-app | Instant prototyping tool |
+
+**The ultimate Nexus differentiator:** *An AI that can build you a custom dashboard showing your emails, calendar, tasks, and research — because it has access to all of them. Then publish it as a plugin. No Manus, Lovable, or Replit can do that — they don't have your data.*
+
 **The winning move:** Adopt the best ideas from each platform's agent system, embedded in Nexus's web UI — with access to data no CLI agent can reach.
 
 ---
