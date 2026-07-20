@@ -387,7 +387,7 @@ class WebhookManager:
     async def deliver_test(self, webhook_id: str, url: str, encrypted_secret: Optional[str]):
         """Public method for the test-webhook route."""
         decrypted = self._decrypt_secret(encrypted_secret)
-        await self._deliver(webhook_id, url, decrypted, "webhook.test", {"message": "Test ping from Odysseus"})
+        await self._deliver(webhook_id, url, decrypted, "webhook.test", {"message": "Test ping from Nexus"})
 
     async def _send_request(self, url: str, body: str, headers: dict,
                             ip: ipaddress._BaseAddress) -> httpx.Response:
@@ -418,12 +418,12 @@ class WebhookManager:
         body = json.dumps({"event": event, "timestamp": _utcnow().isoformat(), "data": payload})
         headers = {
             "Content-Type": "application/json",
-            "X-Odysseus-Event": event,
-            "User-Agent": "Odysseus-Webhook/1.0",
+            "X-Nexus-Event": event,
+            "User-Agent": "Nexus-Webhook/1.0",
         }
         if secret:
             sig = hmac.new(secret.encode(), body.encode(), hashlib.sha256).hexdigest()
-            headers["X-Odysseus-Signature"] = sig
+            headers["X-Nexus-Signature"] = sig
 
         db = SessionLocal()
         try:

@@ -1,22 +1,22 @@
 {
-  "name": "odysseus",
+  "name": "nexus",
   "version": "0.1.1",
-  "description": "Connect Codex to a scoped Odysseus instance.",
+  "description": "Connect Codex to a scoped Nexus instance.",
   "author": {
-    "name": "Odysseus"
+    "name": "Nexus"
   },
   "skills": "./skills/",
   "interface": {
-    "displayName": "Odysseus",
-    "shortDescription": "Use scoped Odysseus tools from Codex.",
-    "longDescription": "Connects Codex terminal sessions to Odysseus through user-controlled scoped API tokens. Codex must use /api/codex/* endpoints so Odysseus Settings can enforce tool access.",
-    "developerName": "Odysseus",
+    "displayName": "Nexus",
+    "shortDescription": "Use scoped Nexus tools from Codex.",
+    "longDescription": "Connects Codex terminal sessions to Nexus through user-controlled scoped API tokens. Codex must use /api/codex/* endpoints so Nexus Settings can enforce tool access.",
+    "developerName": "Nexus",
     "category": "Productivity",
     "capabilities": [
       "todos",
       "email",
       "scoped-api"
     ],
-    "defaultPrompt": "Use Odysseus only through configured scoped access. Check capabilities before reading or writing data."
+    "defaultPrompt": "Use Nexus only through configured scoped access. Check capabilities before reading or writing data."
   }
 }
