@@ -54,7 +54,7 @@
 
 | Platform | What it does | Nexus Opportunity |
 |---|---|---|
-| **Manus.ai** (Meta) | Full-stack apps from plain English prompts. Built-in DB, auth, Stripe, SEO, analytics, browser operator, code export | **Conversational app builder inside Nexus** — "Build me a task dashboard" → Nexus generates the UI using existing components |
+| **Manus.ai** (Butterfly Effect / Monica) | Full-stack apps from plain English prompts. Built-in DB, auth, Stripe, SEO, analytics, browser operator, code export | **Conversational app builder inside Nexus** — "Build me a task dashboard" → Nexus generates the UI using existing components |
 | **Lovable** | React + Supabase apps from prompts | Visual workspace dashboard builder |
 | **Replit Agent** | Full IDE + AI agent, deploy apps | In-browser coding for extending Nexus |
 | **Bolt.new** | StackBlitz-based prompt-to-app | Instant prototyping tool |
@@ -62,6 +62,19 @@
 **The ultimate Nexus differentiator:** *An AI that can build you a custom dashboard showing your emails, calendar, tasks, and research — because it has access to all of them. Then publish it as a plugin. No Manus, Lovable, or Replit can do that — they don't have your data.*
 
 **The winning move:** Adopt the best ideas from each platform's agent system, embedded in Nexus's web UI — with access to data no CLI agent can reach.
+
+---
+
+## 🧹 Sprint 0: Foundation (Do This First)
+
+*Ship nothing new until the base is sound. Every feature below is built on this.*
+
+| Item | Problem | Action |
+|---|---|---|
+| **Test suite** | `pytest -m "not slow"` currently reports **127 failures** (4517 pass). Sprint 1's FTS5/skill work can't be validated against a red suite. | Triage the failures — most appear environment/Windows-related, not product bugs. Get to a known-green baseline (or a documented, quarantined skip list) before building on top. |
+| **Stale demo media** | The 8 landing-page `.webm` tours and `docs/nexus.jpg` still show the **old Odysseus** UI and copy. The README's Demo link sends visitors to a tour of the old brand. | Re-record against the current build once the app runs cleanly. |
+| **API token break** | The `ody_` → `nx_` prefix change (commit `88ce3c6`) invalidates any token minted before it — `app.py` gates bearer auth on `startswith("Bearer nx_")`. Local db has **0 tokens**, so no live impact here, but any deployed fork breaks silently. | Document as a breaking change in release notes; re-mint tokens after upgrade. No code change needed. |
+| **Upstream attribution** | Fork of an AGPL project with no visible credit to the origin. | Add a "Built on" line to README + ACKNOWLEDGMENTS (done). |
 
 ---
 
@@ -243,13 +256,13 @@ These features leverage Nexus's unique data surface. No competitor can replicate
 
 ## 🏗️ Architecture Principles
 
-1. **Everything in one process** — FastAPI serves API + SPA. No microservices. Simpler deployment.
+1. **One app process** — FastAPI serves the API + SPA from a single process. Supporting services (vector store, search, push) run as sibling containers, not app-internal microservices. New capability lands in the app process by default; a separate process needs justification (the messaging gateway is the first candidate).
 2. **Local-first, private by default** — SQLite, on-device embeddings, local auth. Cloud is optional opt-in.
 3. **Graceful degradation** — Optional deps (crawl4ai, PyMuPDF, markitdown) fall back with clear messages.
 4. **Cross-domain from day one** — All data (email, calendar, docs, tasks) lives in the same database. The AI sees everything.
 5. **Skill-based agent system** — SKILL.md is the unit of agent capability. Self-improving skills over time.
 6. **Messaging-first** — Not just web UI. Talk to Nexus from anywhere.
-7. **Self-contained** — Single Docker image or `pip install`. No external dependencies beyond a database.
+7. **Few moving parts** — One app image plus a small, fixed set of supporting containers (ChromaDB, SearXNG, ntfy). No sprawl of per-feature services.
 
 ---
 
@@ -259,7 +272,8 @@ These features leverage Nexus's unique data surface. No competitor can replicate
 # Run locally
 python -m uvicorn app:app --host 127.0.0.1 --port 7000
 
-# Run tests (fast lane)
+# Run tests (fast lane) — see Sprint 0: ~127 known failures currently,
+# largely environment-related; triage to green before relying on this gate
 python -m pytest -m "not slow"
 
 # Run all tests

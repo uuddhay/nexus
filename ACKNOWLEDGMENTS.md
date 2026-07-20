@@ -4,6 +4,10 @@ Nexus stands on the shoulders of a lot of open-source work. This file
 credits the projects whose code, assets, or designs are included in or
 adapted by this repository, and notes their licenses.
 
+Nexus is a fork of [Odysseus](https://github.com/pewdiepie-archdaemon/odysseus).
+The overwhelming majority of the codebase was written by the Odysseus
+contributors; this fork continues that work under the same AGPL-3.0 license.
+
 If you believe something here is mis-attributed or missing, please open an
 issue — it will be corrected promptly.
 

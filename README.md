@@ -14,10 +14,6 @@
   <a href="ROADMAP.md">Roadmap</a>
 </p>
 
-<p align="center">
-  <a href="https://repology.org/project/nexus-ai/versions"><img src="https://repology.org/badge/vertical-allrepos/nexus-ai.svg" alt="Packaging status"></a>
-</p>
-
 ---
 
 ## Quick Start
@@ -38,10 +34,10 @@ Native installs, GPU notes, Windows/macOS instructions, HTTPS, and configuration
 ## Features — *What no other platform can do*
 
 ### 📧 Email Inbox + AI Assistant
-Full IMAP/SMTP integration with AI triage, urgency detection, summaries, reply drafts, tags, reminders, and attachment handling. *No other open-source AI platform has this.*
+Full IMAP/SMTP integration with AI triage, urgency detection, summaries, reply drafts, tags, reminders, and attachment handling. *Almost unheard of in a self-hosted AI platform.*
 
 ### 📅 Calendar + CalDAV Sync
-Personal and shared calendars with month/week/day views, recurring events, color coding, attendees, reminders, and two-way CalDAV sync. *Nexus is the only AI workspace with a calendar.*
+Personal and shared calendars with month/week/day views, recurring events, color coding, attendees, reminders, and two-way CalDAV sync. *Vanishingly rare for an AI workspace to ship a real calendar.*
 
 ### 📝 Documents Editor
 Full-featured writing editor with AI edits, inline suggestions, Markdown/HTML/CSV support, syntax highlighting, and document library. *Write with AI, not just chat with it.*
@@ -56,7 +52,7 @@ Multi-step autonomous web research: generates questions, searches, reads sources
 Hardware-aware model recommendations, one-click downloads, and local model serving (llama.cpp, vLLM). Knows what fits your GPU before you download.
 
 ### 🔗 Cross-Domain Intelligence (NEW)
-Email → Tasks, Email → Calendar, Calendar → Research, Tasks → Email. The AI connects your data across domains because they all live in one place. *Only Nexus can do this.*
+Email → Tasks, Email → Calendar, Calendar → Research, Tasks → Email. The AI connects your data across domains because they all live in one place. *Hard to match without holding all your data in one place.*
 
 ### 📋 Notes, Tasks + Calendar
 Reminders, todos, scheduled agent tasks, recurring events, and a unified view of your day.
@@ -85,6 +81,10 @@ Nexus is a self-hosted workspace with powerful local tools. Keep auth enabled, k
    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=uuddhay/nexus&type=date&legend=top-left" />
  </picture>
 </a>
+
+## Built on
+
+Nexus is a fork of [Odysseus](https://github.com/pewdiepie-archdaemon/odysseus), whose contributors built the foundation this project stands on. See [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for the full credits.
 
 ## License
 
