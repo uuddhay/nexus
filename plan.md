@@ -34,13 +34,23 @@
 | **Voice mode** | ✅ Real-time voice in CLI/Telegram/Discord | ⚠️ Basic TTS/STT | **Low-Medium** |
 | **Terminal backends** | ✅ 6 (local, Docker, SSH, Modal, Daytona, Singularity) | ⚠️ Local only | **Low** — niche |
 
-### The Real Insight
+### Where Competitors Win: The Agent/Coding Tools Landscape
 
-**Hermes Agent is a better *agent*.** Nexus is a better *workspace*.
+| Project | Type | Key Capabilities Nexus Lacks | Nexus Opportunity |
+|---|---|---|---|
+| **Claude Code** | CLI coding agent | Plugin system (commands/agents/hooks/skills), 7-phase feature workflow, PR review toolkit, iterative dev loops (Ralph Wiggum), managed settings, MDM deploy | Adopt plugin architecture + structured dev workflows in Nexus UI |
+| **OpenCode/Crush** | TUI coding agent | Go/Bubble Tea TUI, LSP integration, session management, auto-compact, MCP tools, custom commands with named args | TUI mode for Nexus power users |
+| **Hermes Agent** | Generalist agent | Self-improving skills, 20-platform messaging gateway, sub-agent delegation, FTS5 search, cron scheduling, sandboxed code exec | Close the agent gap (see Sprint 1-4) |
+| **Aider** | CLI pair programmer | Map&edit repo-aware editing, automatic git commits, multi-model architect/editor mode, voice coding | Agent-in-IDE pattern for Nexus |
+| **Cline** | VS Code agent | Autonomous coding in IDE, terminal/file/editor access, MCP tools, checkpoint/restore, diff-based edits | VS Code extension for Nexus |
+| **Continue** | IDE platform | Custom AI rules, model selection per workspace, tab autocomplete, inline edits, chat sidebar, @-context mentions | IDE bridge to Nexus |
+| **Codex CLI** | CLI agent by OpenAI | Sandboxed execution, file edit tools, agent loop, bash/shell | Sandbox execution for Nexus |
 
-Hermes Agent excels at autonomy, learning, and reach. Nexus excels at data depth — email, calendar, documents, research — the things an agent needs to be truly useful.
+**The Real Insight**
 
-**The winning move: Make Nexus's agent as capable as Hermes Agent, then connect it to Nexus's unique data.** No one else can do that.
+**Claude Code and Hermes Agent lead in agent capability.** Nexus leads in *data depth* — email, calendar, documents, research.
+
+**The winning move:** Adopt the best ideas from each platform's agent system, embedded in Nexus's web UI — with access to data no CLI agent can reach.
 
 ---
 

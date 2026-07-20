@@ -1,7 +1,7 @@
 # Nexus Strategy — How to Be Better Than Anything Out There
 
-> **Date:** 2026-07-20 (Updated with Hermes Agent analysis)
-> **Scope:** Competitive analysis of Open WebUI, Dify, n8n, Jan, LobeHub, and **Hermes Agent** → unique strategy for Nexus to dominate.
+> **Date:** 2026-07-20 (Updated with Hermes Agent, Claude Code, OpenCode, Aider, Cline, Continue, Codex CLI)
+> **Scope:** Competitive analysis of Open WebUI, Dify, n8n, Jan, LobeHub, Hermes Agent, Claude Code, OpenCode/Crush, Aider, Cline, Continue, Codex CLI → unique strategy for Nexus to dominate.
 
 ---
 
@@ -34,13 +34,23 @@
 | TUI/CLI interface | ✅ Full terminal UI | ❌ Web-only |
 | Voice mode | ✅ Real-time voice | ⚠️ Basic TTS/STT |
 
+### Agent/Coding Tool Landscape
+
+| Project | Type | Key Differentiator | Nexus Gap |
+|---|---|---|---|
+| **Claude Code** | CLI coding agent | Plugin system (commands/agents/hooks/skills), structured feature dev workflow, PR review, iterative dev loops, managed settings/MDM | Plugin architecture + dev workflows |
+| **OpenCode/Crush** | TUI coding agent | Go/Bubble Tea TUI, LSP, auto-compact, MCP tools, custom commands | TUI mode for power users |
+| **Hermes Agent** | Generalist agent | Self-improving skills, 20-platform messaging, sub-agent delegation, cron, sandbox | Agent learning loop |
+| **Aider** | CLI pair programmer | Repo-aware editing, auto git commits, architect/editor mode, voice | Agent-in-IDE pattern |
+| **Cline** | VS Code agent | Autonomous IDE coding, MCP tools, checkpoint/restore, diff editing | VS Code extension |
+| **Continue** | IDE platform | Custom AI rules, per-workspace models, tab autocomplete, inline edits, @-mentions | IDE bridge |
+| **Codex CLI** | CLI agent | Sandboxed execution, agent loop, bash/shell tools | Sandbox execution |
+
 ### The Real Insight
 
-**Hermes Agent is a better *agent*. Nexus is a better *workspace*.**
+**Claude Code + Hermes Agent lead in agent capability.** Nexus leads in *data depth* — email, calendar, documents, research — data no CLI agent can reach.
 
-Hermes Agent excels at autonomy, learning, and multi-platform reach. Nexus excels at data depth — email, calendar, documents, research — the raw materials an agent needs to be truly useful.
-
-**The winning move:** Make Nexus's agent as capable as Hermes Agent, then connect it to Nexus's unique data. No competitor can match a self-improving agent that also has access to your email, calendar, and documents.
+**The winning move:** Adopt each platform's best agent ideas into Nexus's web UI, connected to Nexus's unique data. No CLI agent can read your email or check your calendar.
 
 ---
 
