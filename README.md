@@ -17,10 +17,6 @@
   <a href="https://repology.org/project/nexus-ai/versions"><img src="https://repology.org/badge/vertical-allrepos/nexus-ai.svg" alt="Packaging status"></a>
 </p>
 
-<p align="center">
-  <img src="docs/nexus-browser.jpg" alt="Nexus interface">
-</p>
-
 ---
 
 ## Quick Start

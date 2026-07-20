@@ -79,7 +79,6 @@ class WebSearchTool:
 
 class WebFetchTool:
     async def execute(self, content: str, ctx: dict) -> dict:
-        from src.search.content import fetch_webpage_content
         from src.constants import WEB_FETCH_HARD_MAX_BYTES
         raw = content.strip()
         url = ""
@@ -108,28 +107,37 @@ class WebFetchTool:
             return {"error": f"web_fetch: unsupported URL scheme (only http/https): {url[:80]}", "exit_code": 1}
         if not low.startswith(("http://", "https://")):
             url = "https://" + url
-        loop = asyncio.get_running_loop()
-        try:
-            def _fetch():
-                kwargs = {"timeout": 10}
-                try:
-                    sig = inspect.signature(fetch_webpage_content)
-                    if "max_bytes" in sig.parameters:
-                        kwargs["max_bytes"] = max_bytes
-                except (TypeError, ValueError):
-                    # Some deployed/test shims may not expose a signature.
-                    # Prefer compatibility over failing the whole fetch.
-                    pass
-                return fetch_webpage_content(url, **kwargs)
 
-            result = await asyncio.wait_for(
-                loop.run_in_executor(None, _fetch),
-                timeout=30,
-            )
-        except asyncio.TimeoutError:
-            return {"error": f"web_fetch: timed out fetching {url}", "exit_code": 1}
+        # Prefer crawl4ai (JS rendering, markdown output); fall back to httpx
+        try:
+            from services.search.crawl4ai_service import fetch_with_crawl4ai_fallback
+            result = await fetch_with_crawl4ai_fallback(url, max_bytes=max_bytes, timeout=30)
+        except ImportError:
+            # crawl4ai not installed — use original httpx-based fetcher
+            from services.search.content import fetch_webpage_content
+            loop = asyncio.get_running_loop()
+            try:
+                def _fetch():
+                    kwargs = {"timeout": 10}
+                    try:
+                        sig = inspect.signature(fetch_webpage_content)
+                        if "max_bytes" in sig.parameters:
+                            kwargs["max_bytes"] = max_bytes
+                    except (TypeError, ValueError):
+                        pass
+                    return fetch_webpage_content(url, **kwargs)
+
+                result = await asyncio.wait_for(
+                    loop.run_in_executor(None, _fetch),
+                    timeout=30,
+                )
+            except asyncio.TimeoutError:
+                return {"error": f"web_fetch: timed out fetching {url}", "exit_code": 1}
+            except Exception as e:
+                return {"error": f"web_fetch: {url}: {e}", "exit_code": 1}
         except Exception as e:
             return {"error": f"web_fetch: {url}: {e}", "exit_code": 1}
+
         err = result.get("error")
         text = (result.get("content") or "").strip()
         title = result.get("title") or ""
