@@ -5,19 +5,82 @@
 
 ---
 
-## 🏆 The Unfair Advantage
+## 📊 Honest Competitive Assessment
 
-| What Nexus has | Competitors |
-|---|---|
-| Email (IMAP/SMTP) | **No one else has this** |
-| Calendar + CalDAV | **No one else has this** |
-| Documents Editor | **No one else has this** |
-| Deep Research | **No one else has this** |
-| Model Serving (Cookbook) | **Only Jan** |
-| Chat + Agents + MCP | Everyone |
-| All in one process | **No one else has this** |
+### Where Nexus Wins (No Competitor Has This)
 
-**The strategy is not to catch up. The strategy is to build what no one else can** — cross-domain AI that reads your email, knows your calendar, drafts documents, and researches topics, all in one private platform.
+| Domain | Nexus | Hermes Agent | Open WebUI | Dify | Jan |
+|---|---|---|---|---|---|
+| Email (IMAP/SMTP) | **✅** | ❌ | ❌ | ❌ | ❌ |
+| Calendar + CalDAV | **✅** | ❌ | ❌ | ❌ | ❌ |
+| Documents Editor | **✅** | ❌ | ❌ | ❌ | ❌ |
+| Deep Research | **✅** | ❌ | ❌ | ❌ | ❌ |
+| Model Serving | **✅** | ❌ | ❌ | ❌ | ✅ |
+| Web UI (SPA) | **✅** | ❌ (CLI only) | ✅ | ✅ | ❌ (Desktop) |
+
+### Where Hermes Agent Leads (Nexus Must Catch Up)
+
+| Capability | Hermes Agent | Nexus | Impact |
+|---|---|---|---|
+| **Self-improving skills** | ✅ Creates + improves skills autonomously | ❌ Static SKILL.md only | **High** — agent gets smarter over time |
+| **Messaging gateway** | ✅ 20+ platforms (Telegram, Discord, WhatsApp, Signal, etc.) | ❌ Web-only | **High** — reach users where they live |
+| **Sub-agent delegation** | ✅ Spawn parallel sub-agents | ❌ Single agent loop | **High** — parallel work |
+| **Cron scheduling** | ✅ Natural-language cron with platform delivery | ⚠️ Basic task scheduling | **Medium** — automations |
+| **Session search (FTS5)** | ✅ Full-text across all past conversations | ❌ No cross-session search | **Medium** — recall |
+| **Code execution sandbox** | ✅ Sandboxed Python | ❌ Shell only | **Medium** — safe code run |
+| **Browser automation** | ✅ Chromium automation | ❌ Not available | **Medium** — web tasks |
+| **TUI/CLI interface** | ✅ Full terminal UI | ❌ Web-only | **Medium** — power users |
+| **Context files** | ✅ Project context injection | ❌ Not available | **Medium** — focused work |
+| **Voice mode** | ✅ Real-time voice in CLI/Telegram/Discord | ⚠️ Basic TTS/STT | **Low-Medium** |
+| **Terminal backends** | ✅ 6 (local, Docker, SSH, Modal, Daytona, Singularity) | ⚠️ Local only | **Low** — niche |
+
+### The Real Insight
+
+**Hermes Agent is a better *agent*.** Nexus is a better *workspace*.
+
+Hermes Agent excels at autonomy, learning, and reach. Nexus excels at data depth — email, calendar, documents, research — the things an agent needs to be truly useful.
+
+**The winning move: Make Nexus's agent as capable as Hermes Agent, then connect it to Nexus's unique data.** No one else can do that.
+
+---
+
+## 🎯 Immediate Priority: Close the Agent Gap
+
+### Sprint 1: Agent Learning Loop
+*"Nexus should get better the more you use it — just like Hermes Agent."*
+
+| Feature | What | Why |
+|---|---|---|
+| **Self-improving skills** | After completing a complex task, the agent creates a SKILL.md from its approach. Skills get refined during reuse. | Hermes Agent's #1 differentiator |
+| **FTS5 session search** | Full-text search across all past conversations. Find that discussion about X from 3 weeks ago. | Hermes Agent has this; users expect it |
+| **Skill consolidation** | Background curator merges related skills, archives stale ones, surfaces conflicts. | Keeps skill library manageable |
+
+### Sprint 2: Messaging Gateway
+*"Talk to Nexus from Telegram, Discord, WhatsApp — not just the web UI."*
+
+| Feature | What | Why |
+|---|---|---|
+| **Telegram bridge** | Chat with Nexus via Telegram bot. Commands, files, voice. | Most requested integration |
+| **Slack/Discord bridge** | Nexus as a bot in your team channels. | Team use case |
+| **WhatsApp bridge** | Nexus on your phone. | Mobile accessibility |
+
+### Sprint 3: Delegation + Parallel Execution
+*"Nexus should spawn sub-agents for hard problems."*
+
+| Feature | What | Why |
+|---|---|---|
+| **Sub-agent delegation** | Main agent spawns sub-agents for parallel work (research, email drafting, data analysis). | Hermes Agent has this |
+| **Parallel tool execution** | Independent tools run concurrently. | Performance |
+| **Checkpoint/restore** | Save agent state mid-task. Resume after interruption. | Reliability |
+
+### Sprint 4: Code Execution Sandbox
+*"Safe Python execution for data analysis and automation."*
+
+| Feature | What | Why |
+|---|---|---|
+| **Sandboxed Python** | Docker or subprocess sandbox for running user code. Returns output + generated files. | Open WebUI has this |
+| **Plot/visualization support** | Matplotlib output captured and displayed inline. | Data analysis use case |
+| **Timeout + resource limits** | Kill runaway scripts. | Safety |
 
 ---
 
@@ -61,7 +124,24 @@ These features leverage Nexus's unique data surface. No competitor can replicate
 
 ## 🟡 PHASE 2 — Sprint 3-5: Match + Exceed
 
-### 4. ⚡ AI-Native Visual Workflow Builder
+### 4. 🧬 Agent Learning Loop (Beat Hermes Agent)
+*"Nexus creates skills from experience and improves them over time."*
+
+- After complex multi-step tasks, the agent generates a `SKILL.md` capturing the approach
+- Skills are refined during reuse (adds missing steps, fixes outdated info)
+- A background curator (`services/curator/`) periodically reviews skills, merges duplicates, archives stale ones
+- FTS5-powered session search lets the agent (and user) find past solutions
+
+### 5. 💬 Messaging Gateway (Beat Hermes Agent on Reach)
+*"Talk to Nexus from Telegram, Discord, WhatsApp, Slack, Signal — anywhere."*
+
+- Single gateway process (`mcp_servers/messaging_gateway.py`) connects to messaging platforms
+- Telegram: full bot API (text, files, voice, commands, inline queries)
+- Discord/Slack: bot in team channels, DMs, slash commands
+- WhatsApp: via Baileys or WWebJS bridge
+- **Why Nexus wins:** Unlike Hermes Agent's gateway, Nexus's gateway has access to email, calendar, and documents. *"Email me that document through Telegram"* — no other agent can do this.
+
+### 6. ⚡ AI-Native Visual Workflow Builder
 *Beat Dify and n8n by letting users describe workflows in plain language.*
 
 - User types: *"Every morning, check email for urgent messages, search web for competitor news, and save a briefing as a document."*
@@ -69,30 +149,15 @@ These features leverage Nexus's unique data surface. No competitor can replicate
 - Visual canvas for tweaking (`static/js/workflow.js`)
 - Cron-based execution engine (`services/workflow/`)
 
-### 5. 🔌 Plugin Marketplace
-*Beat Open WebUI's community sharing.*
-
-- Format: `plugin.json` manifest (directory with SKILL.md + optional Python/frontend)
-- One-click install: paste GitHub URL → Nexus clones + registers
-- "Browse Nexus Community" button in Skills UI
-
-### 6. 📊 Usage Analytics + RBAC
-*Match Open WebUI and Dify for teams.*
-
-- Token usage tracking (per-user, per-model, per-session)
-- Admin dashboard (charts, costs, active users)
-- Role-based access (admin, power user, viewer)
-- Group-based model/tool permissions
-
 ---
 
 ## 🔵 PHASE 3 — Sprint 6+: The Unassailable Moat
 
 ### 7. 🏢 Multi-Agent Teams
-*Beyond LobeHub — agents with real data to act on.*
+*"Email Agent + Research Agent + Calendar Agent + Writing Agent working together."*
 
-- Specialized agents: Email Agent, Research Agent, Calendar Agent, Writing Agent
-- Agent collaboration: Research Agent finds info → Writing Agent drafts → Email Agent sends
+- Specialized agents with domain expertise
+- Agent collaboration graph: Research Agent finds info → Writing Agent drafts → Email Agent sends
 - Scheduled agents (cron, event-driven, on-demand)
 - Preference learning over time
 
@@ -105,12 +170,20 @@ These features leverage Nexus's unique data surface. No competitor can replicate
 - Offline-first with local SQLite
 - Auto-start on boot
 
-### 9. 🌍 i18n / Multilingual
-*Match Dify and Open WebUI for international users.*
+### 9. 🔌 Plugin Marketplace
+*One-click install from the community.*
 
-- Extract all UI strings to JSON locale files
-- Community-contributed translations
-- Language selector in settings
+- Format: `plugin.json` manifest (directory with SKILL.md + optional Python/frontend)
+- One-click install: paste GitHub URL → Nexus clones + registers
+- "Browse Nexus Community" button in Skills UI
+
+### 10. 📊 Usage Analytics + RBAC
+*For teams and power users.*
+
+- Token usage tracking (per-user, per-model, per-session)
+- Admin dashboard (charts, costs, active users)
+- Role-based access (admin, power user, viewer)
+- Group-based model/tool permissions
 
 ---
 
@@ -129,14 +202,18 @@ These features leverage Nexus's unique data surface. No competitor can replicate
 | Skills (SKILL.md) | ✅ Done | Agent skill registry |
 | MCP Servers | ✅ Done | Email, image-gen, memory, RAG |
 | Copilot Instructions | ✅ Done | `.github/copilot-instructions.md` |
-| Token Prefix (`nx_`) | ✅ Done | `ody_` → `nx_` rebrand |
-| **Morning Briefing** | 📝 **Next** | Phase 1 priority |
-| **Email Assistant** | 📝 **Next** | Phase 1 priority |
-| **Cross-Domain Engine** | 📝 **Next** | Phase 1 priority |
+| **Self-improving skills** | 📝 **Sprint 1** | Close Hermes Agent gap |
+| **FTS5 session search** | 📝 **Sprint 1** | Cross-session recall |
+| **Messaging gateway** | 📝 **Sprint 2** | Telegram, Discord, WhatsApp, Slack |
+| **Sub-agent delegation** | 📝 **Sprint 3** | Parallel agent execution |
+| **Code execution sandbox** | 📝 **Sprint 4** | Safe Python evaluation |
+| **Morning Briefing** | 📝 **Sprint 1-2** | Nexus's unique value |
+| **Email Assistant** | 📝 **Sprint 1-2** | Nexus's unique value |
+| **Cross-Domain Engine** | 📝 **Sprint 1-2** | Nexus's unique value |
 | Visual Workflow | ❌ Planned | Phase 2 |
-| Plugin Marketplace | ❌ Planned | Phase 2 |
-| Usage Analytics | ❌ Planned | Phase 2 |
-| RBAC + Groups | ❌ Planned | Phase 2 |
+| Plugin Marketplace | ❌ Planned | Phase 3 |
+| Usage Analytics | ❌ Planned | Phase 3 |
+| RBAC + Groups | ❌ Planned | Phase 3 |
 | Multi-Agent Teams | ❌ Planned | Phase 3 |
 | Desktop App | ❌ Planned | Phase 3 |
 | i18n | ❌ Planned | Phase 3 |
@@ -149,8 +226,9 @@ These features leverage Nexus's unique data surface. No competitor can replicate
 2. **Local-first, private by default** — SQLite, on-device embeddings, local auth. Cloud is optional opt-in.
 3. **Graceful degradation** — Optional deps (crawl4ai, PyMuPDF, markitdown) fall back with clear messages.
 4. **Cross-domain from day one** — All data (email, calendar, docs, tasks) lives in the same database. The AI sees everything.
-5. **Skill-based agent system** — SKILL.md is the unit of agent capability. Plugin marketplace extends this.
-6. **Self-contained** — Single Docker image or `pip install`. No external dependencies beyond a database.
+5. **Skill-based agent system** — SKILL.md is the unit of agent capability. Self-improving skills over time.
+6. **Messaging-first** — Not just web UI. Talk to Nexus from anywhere.
+7. **Self-contained** — Single Docker image or `pip install`. No external dependencies beyond a database.
 
 ---
 

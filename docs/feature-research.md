@@ -1,7 +1,7 @@
 # Nexus Strategy — How to Be Better Than Anything Out There
 
-> **Date:** 2026-07-20
-> **Scope:** Competitive analysis of Open WebUI, Dify, n8n, Jan, and LobeHub → unique strategy for Nexus to dominate.
+> **Date:** 2026-07-20 (Updated with Hermes Agent analysis)
+> **Scope:** Competitive analysis of Open WebUI, Dify, n8n, Jan, LobeHub, and **Hermes Agent** → unique strategy for Nexus to dominate.
 
 ---
 
@@ -9,18 +9,38 @@
 
 **No other open-source AI platform combines email, calendar, documents, deep research, model serving, and agents in a single self-hosted process.**
 
-| Domain | Nexus | Open WebUI | Dify | n8n | Jan | LobeHub |
+| Domain | Nexus | Hermes Agent | Open WebUI | Dify | n8n | Jan |
 |---|---|---|---|---|---|---|
 | Email (IMAP/SMTP) | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
 | Calendar + CalDAV | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
 | Documents Editor | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
 | Deep Research | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Model Serving | **✅** | ❌ | ❌ | ❌ | ✅ | ❌ |
-| MCP Built-in | **✅** | ❌ | ❌ | ❌ | ✅ | ❌ |
+| Model Serving | **✅** | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Web UI (SPA) | **✅** | ❌ | ✅ | ✅ | ✅ | ❌ |
 | Chat + Agents | **✅** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| RAG | **✅** | ✅ | ✅ | ❌ | ❌ | ✅ |
+| RAG | **✅** | ❌ | ✅ | ✅ | ❌ | ❌ |
 
-Nexus doesn't need to catch up. **Nexus needs to build what no one else can** — because they'd need to build email, calendars, documents, and research engines from scratch.
+### Where Hermes Agent Leads
+
+| Capability | Hermes Agent | Nexus |
+|---|---|---|
+| Self-improving skills | ✅ Creates + improves skills autonomously | ❌ Static SKILL.md only |
+| Messaging gateway | ✅ 20+ platforms (Telegram, Discord, WhatsApp, Signal, etc.) | ❌ Web-only |
+| Sub-agent delegation | ✅ Spawn parallel sub-agents | ❌ Single agent loop |
+| FTS5 session search | ✅ Full-text across all past conversations | ❌ No cross-session search |
+| Code execution sandbox | ✅ Sandboxed Python | ❌ Shell only |
+| Browser automation | ✅ Chromium automation | ❌ Not available |
+| Cron scheduling | ✅ Natural-language cron with platform delivery | ⚠️ Basic task scheduling |
+| TUI/CLI interface | ✅ Full terminal UI | ❌ Web-only |
+| Voice mode | ✅ Real-time voice | ⚠️ Basic TTS/STT |
+
+### The Real Insight
+
+**Hermes Agent is a better *agent*. Nexus is a better *workspace*.**
+
+Hermes Agent excels at autonomy, learning, and multi-platform reach. Nexus excels at data depth — email, calendar, documents, research — the raw materials an agent needs to be truly useful.
+
+**The winning move:** Make Nexus's agent as capable as Hermes Agent, then connect it to Nexus's unique data. No competitor can match a self-improving agent that also has access to your email, calendar, and documents.
 
 ---
 
